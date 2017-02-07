@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170206143219) do
+ActiveRecord::Schema.define(version: 20170207132729) do
 
   create_table "tweets", force: :cascade do |t|
     t.string   "message"
@@ -36,6 +36,8 @@ ActiveRecord::Schema.define(version: 20170206143219) do
     t.string   "username"
     t.string   "location"
     t.text     "bio"
+    t.string   "avatar"
+    t.text     "following"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
