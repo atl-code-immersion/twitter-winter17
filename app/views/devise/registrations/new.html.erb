@@ -26,6 +26,11 @@
       </div>
 
       <div class="form-group">
+        <strong>Upload Avatar: </strong>
+        <%= f.file_field :avatar %>
+      </div>
+
+      <div class="form-group">
         <%= f.password_field :password, placeholder: "Password", class: "form-control", autocomplete: "off" %>
         <% if @minimum_password_length %>
           <em>(<%= @minimum_password_length %> characters minimum)</em>
