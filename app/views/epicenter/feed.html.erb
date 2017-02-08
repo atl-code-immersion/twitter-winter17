@@ -1,12 +1,45 @@
-<h1>@<%= current_user.username %>'s Twitter Feed</h1>
-<p>Here is what your "friends" are saying:</p>
-
-
-<div>
-	<% @following_tweets.each do |tweet| %>
-		<div>
-			<p>@<%= tweet.user.username %></p>
-			<p><%= tweet.message.html_safe %></p>
+<div class="row">
+	<div class="col-md-3 well">
+		<div class="row">
+			<div class="col-md-3">
+				<%= image_tag current_user.avatar.url, class: "user-pic-stats img-rounded" %>
+			</div>
+			<div class="col-md-5 col-md-offset-1">
+				<p>
+					<strong><%= link_to current_user.name, show_user_path(id: current_user.id) %></strong>
+				</p>
+				<p>
+					<%= link_to "@#{current_user.username}", show_user_path(id: current_user.id) %>
+				</p>
+			</div>
 		</div>
-	<% end %>
+		<div class="row mtop-10">
+			<div class="col-md-4">
+				<p>Tweets</p>
+				<p><strong><%= link_to current_user.tweets.length, show_user_path(id: current_user.id) %></strong></p>
+			</div>
+			<div class="col-md-4">
+				<p>Following</p>
+				<p><strong><%= link_to current_user.following.length, following_path(id: current_user.id) %></strong></p>
+			</div>
+			<div class="col-md-4">
+				<p>Followers</p>
+				<p><strong><%= link_to @follower_count, followers_path(id: current_user.id) %></strong></p>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-8 col-md-offset-1">
+		<div>
+			<% @following_tweets.each do |tweet| %>
+				<div class="well">
+					<p>
+						<%= image_tag tweet.user.avatar.url, class: "user-pic-nav" %>&nbsp;
+						<%= link_to tweet.user.name, show_user_path(id: tweet.user_id) %> @<%= link_to tweet.user.username, show_user_path(id: tweet.user_id) %>
+						&#8226; <%= time_ago_in_words(tweet.created_at) %>
+					</p>
+					<p><%= tweet.message.html_safe %></p>
+				</div>
+			<% end %>
+		</div>
+	</div>
 </div>

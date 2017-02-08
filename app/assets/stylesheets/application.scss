@@ -19,9 +19,9 @@
  @import "font-awesome";
 
 
-.user-pic-sm {
-	height: 50px;
-	width: 50px;
+.user-pic-stats {
+	height: 72px;
+	width: 72px;
 }
 
 .user-pic-nav {
@@ -29,6 +29,29 @@
 	width: 20px;
 }
 
+.user-pic-md {
+	height: 100px;
+	width: 100px;
+}
+
 .gray-text {
 	color: gray;
+}
+
+.mtop-10 {
+	margin-top: 10px;
+}
+
+.center-it {
+	text-align: center;
+}
+
+.rel-pos {
+	position: relative;
+}
+
+.bottom {
+	position: absolute;
+	bottom: 0;
+	right: 0;
 }

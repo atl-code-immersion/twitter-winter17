@@ -1,21 +1,57 @@
-<h1>@<%= @user.username %>'s Profile &amp; Tweets</h1>
-
-<p><%= @user.name %></p>
-<p><%= @user.location %></p>
-<p><%= @user.bio %></p>
-
-<p>
-	<% if current_user.following.include?(@user.id) %>
-		<%= link_to "Unfollow", unfollow_path(id: @user.id), class: "btn btn-danger" %>
-	<% else %>
-		<% if current_user.id != @user.id %>
-			<%= link_to "Follow", now_following_path(id: @user.id), class: "btn btn-primary" %>
-		<% end %>
-	<% end %>
-</p>
-
-<% @user.tweets.each do |tweet| %>
-	<div>
-		<p>@<%= @user.username %></p>
-		<p><%= tweet.message %></p>
-<% end %>
+<div class="row">
+	<div class="col-md-3">
+		<div class="row">
+			<div class="col-md-3">
+				<%= image_tag @user.avatar.url, class: "user-pic-stats img-rounded" %>
+			</div>
+			<div class="col-md-9">
+				<h3><%= @user.name %></h3>
+				<p>@<%= @user.username %></p>
+			</div>
+		</div>
+		<p><%= @user.bio %></p>
+		<p><i class="fa fa-map-marker"></i> <%= @user.location %></p>
+		<p><i class="fa fa-calendar"></i> Joined <%= @user.created_at.strftime("%B %Y") %></p>
+	</div>
+	<div class="col-md-8 col-md-offset-1">
+		<div class="row">
+			<div class="col-md-3 center-it">
+				<p>Tweets</p>
+				<h4><%= @user.tweets.length %></h4>
+			</div>
+			<div class="col-md-3 center-it">
+				<p>Following</p>
+				<h4><%= link_to @user.following.length, following_path(id: @user.id) %></h4>
+			</div>
+			<div class="col-md-3 center-it">
+				<p>Followers</p>
+				<h4><%= link_to @follower_count, followers_path(id: @user.id) %></h4>
+			</div>
+			<div class="col-md-3 center-it">
+				<p>
+					<% if current_user.following.include?(@user.id) %>
+						<%= link_to "Unfollow", unfollow_path(id: @user.id), class: "btn btn-danger" %>
+					<% else %>
+						<% if current_user.id != @user.id %>
+							<%= link_to "Follow", now_following_path(id: @user.id), class: "btn btn-primary" %>
+						<% end %>
+					<% end %>
+				</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<% @user.tweets.order(created_at: :desc).each do |tweet| %>
+					<div class="well">
+						<p>
+							<%= image_tag tweet.user.avatar.url, class: "user-pic-nav" %>&nbsp;
+							<%= link_to tweet.user.name, show_user_path(id: tweet.user_id) %> @<%= link_to tweet.user.username, show_user_path(id: tweet.user_id) %>
+							&#8226; <%= time_ago_in_words(tweet.created_at) %>
+						</p>
+						<p><%= tweet.message.html_safe %></p>
+					</div>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>
