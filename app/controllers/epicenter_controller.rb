@@ -49,27 +49,34 @@ class EpicenterController < ApplicationController
 
   def following
     @user = User.find(params[:id])
-
-    @followed_users = []
+    @users = []
 
     User.all.each do |user|
       if @user.following.include?(user.id)
-        @followed_users.push(user)
+        @users.push(user)
       end
     end
   end
 
   def followers
-    @user = User.find(params[:id])
-
-    @followers = []
+    @user =  User.find(params[:id])
+    @users = []
 
     User.all.each do |user|
       if user.following.include?(@user.id)
-        @followers.push(user)
+        @users.push(user)
       end
     end
   end
+  def all_users
+    @users = User.all
+    # or:
+    # User.order(:username)
+    # User.order(:name)
+    # or whatever order you'd
+    # like to put them in
+  end
+
 end
 
 

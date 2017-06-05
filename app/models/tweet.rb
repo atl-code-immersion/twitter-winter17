@@ -30,13 +30,15 @@ class Tweet < ApplicationRecord
 	end
 
 	def apply_link
-		arr = self.message.split
-		index = arr.map { |x| x.include?("http://") || x.include?("https://") }.index(true)
-		url = arr[index]
+		if self.message.include?("http://") || self.message.include?("https://")
+			arr = self.message.split
+			index = arr.map { |x| x.include?("http://") || x.include?("https://") }.index(true)
+			url = arr[index]
 
-		arr[index] = "<a href='#{self.link}' target='_blank'>#{url}</a>"
+			arr[index] = "<a href='#{self.link}' target='_blank'>#{url}</a>"
 
-		self.message = arr.join(" ")
+			self.message = arr.join(" ")
+		end
 	end
 
 end
